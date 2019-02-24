@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jin.learn</groupId>
+    <artifactId>spring-boot-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--版本变量-->
+    <properties>
+        <java.version>1.8</java.version>
+        <mybtais-starter.veriosn>1.3.2</mybtais-starter.veriosn> <!--根据需要修改-->
+        <mybatis-page-helper-starter.version>1.2.10</mybatis-page-helper-starter.version>
+    </properties>
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.3.RELEASE</version> <!--根据需要修改-->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!--各种starter https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference/htmlsingle/#using-boot-maven-->
+    <dependencies>
+        <!--###################web相关################################################-->
+        <!--web 包含tomcat容器 spring-mvc hibernate-validators 以及spring自动配置 日志logback ioc-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--当然你也可以使用webflux-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-webflux</artifactId>-->
+        <!--</dependency>-->
+        <!--权限管理-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
+        <!--###################数据库################################################-->
+        <!--驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--默认连接池HikariCP(也可替换使用druid)-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybtais-starter.veriosn}</version>
+        </dependency>
+
+        <!--mybatis 分页插件 https://github.com/pagehelper/pagehelper-spring-boot-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${mybatis-page-helper-starter.version}</version>
+        </dependency>
+
+
+        <!--#################缓存##################################################-->
+        <!--默认驱动 lettuce-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <!--spring-boot-starter-redis 这个已经淘汰了-->
+            <artifactId>spring-boot-starter-data-redis</artifactId> <!--RedisAutoConfiguration自动化配置类在autoconfigure中-->
+        </dependency>
+        <!--提供注解方式使用缓存-->
+        <dependency>
+            <!--其实不加也没事 这个包的依赖都在其他的包中引入-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+
+        <!--#################消息中间件##################################################-->
+        <!--https://github.com/maihaoche/rocketmq-spring-boot-starter-->
+        <dependency>
+            <groupId>com.maihaoche</groupId>
+            <artifactId>spring-boot-starter-rocketmq</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!--#################工具包###############################################-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profileActive>test</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileActive>prod</profileActive>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <build>
+        <plugins>
+            <!--解决SpringBoot打包成jar后运行提示没有主清单属性-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--mybatis从数据库生成代码-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <configuration>
+                    <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

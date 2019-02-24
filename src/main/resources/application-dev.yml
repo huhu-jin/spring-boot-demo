@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+# mysql配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/abc?noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&connectTimeout=10000&socketTimeout=60000&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=TRUE&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 1765000
+      maximumPoolSize: 15
+      connection-timeout: 60000
+#缓存配置
+  cache:
+      type: redis
+  redis:
+    database: 0
+    host: 192.168.1.191
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 3600
+# 消息中间件
+  rocketmq:
+    name-server-address: 172.21.10.111:9876
+    # 可选, 如果无需发送消息则忽略该配置
+    producer-group: local_pufang_producer
+    # 发送超时配置毫秒数, 可选, 默认3000
+    send-msg-timeout: 5000
+    # 追溯消息具体消费情况的开关，默认打开
+    trace-enabled: false
+    # 是否启用VIP通道，默认打开
+    vip-channel-enabled: false
+
+
+mybatis:
+  mapper-locations: "/dao/*"
