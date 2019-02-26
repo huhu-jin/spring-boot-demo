@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jin.learn.dao.AuthorityMapper">
+  <resultMap id="BaseResultMap" type="com.jin.learn.entity.Authority">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="authority" jdbcType="VARCHAR" property="authority" />
+    <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, pid, authority, authority_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from authority
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from authority
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jin.learn.entity.Authority">
+    insert into authority (id, type, pid, 
+      authority, authority_name)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{pid,jdbcType=BIGINT}, 
+      #{authority,jdbcType=VARCHAR}, #{authorityName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jin.learn.entity.Authority">
+    insert into authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="authority != null">
+        authority,
+      </if>
+      <if test="authorityName != null">
+        authority_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="authority != null">
+        #{authority,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null">
+        #{authorityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jin.learn.entity.Authority">
+    update authority
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="authority != null">
+        authority = #{authority,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null">
+        authority_name = #{authorityName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jin.learn.entity.Authority">
+    update authority
+    set type = #{type,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=BIGINT},
+      authority = #{authority,jdbcType=VARCHAR},
+      authority_name = #{authorityName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
