@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * 授权异常的处理器
+ */
+
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 

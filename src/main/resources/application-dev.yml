@@ -4,7 +4,7 @@ server:
 spring:
 # mysql配置
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/abc?noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&connectTimeout=10000&socketTimeout=60000&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=TRUE&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/demo?noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&connectTimeout=10000&socketTimeout=60000&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=TRUE&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

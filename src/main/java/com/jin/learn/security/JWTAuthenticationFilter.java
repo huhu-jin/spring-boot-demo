@@ -30,22 +30,26 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-         if(JWTUtil.verifyToken(request){
-             UserDetails userDetails;
-            String username = JWTUtil.getUsernameFromRequest(request);
-            try {
-                userDetails = userDetailsService.loadUserByUsername(username);
-            } catch (UsernameNotFoundException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-                return;
-            }
+        String requestURI = request.getRequestURI();
+        if (!requestURI.equals("/demo/free") && !requestURI.startsWith("/demo/authorize/")) {
+            if (JWTUtil.verifyToken(request)) {
+                UserDetails userDetails;
+                String username = JWTUtil.getUsernameFromRequest(request);
+                try {
+                    userDetails = userDetailsService.loadUserByUsername(username);// 查出权限
+                } catch (UsernameNotFoundException e) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+                    return;
+                }
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                logger.info("authorized user '{}', setting security context", username);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("authorized user '{}', setting security context", username);
+                SecurityContextHolder.getContext().setAuthentication(authentication); //放入上下文环境
+                chain.doFilter(request, response);
+            }
+        }else{
         chain.doFilter(request, response);
         }
-
 
 
     }

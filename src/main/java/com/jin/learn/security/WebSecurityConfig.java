@@ -1,4 +1,4 @@
-package com.jin.learn.config;
+package com.jin.learn.security;
 
 import com.jin.learn.security.JWTAuthenticationFilter;
 import com.jin.learn.security.JWTAuthenticationEntryPoint;
@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
+    @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() // 不要产生session
                 .authorizeRequests()
                 //允许以下请求
-                .antMatchers("/demo/test").permitAll()
+                .antMatchers("/demo/free","/demo/authorize/**").permitAll()
                 // 所有请求需要身份认证
                 .anyRequest().authenticated();
 
