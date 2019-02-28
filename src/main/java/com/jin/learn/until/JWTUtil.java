@@ -66,7 +66,7 @@ public class JWTUtil {
                         .parseClaimsJws(token)
                         .getBody();
             } catch (ExpiredJwtException e) {
-                log.error("token已过期", e);
+                log.info("token已过期");
             } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
                 log.error("error", e);
             }

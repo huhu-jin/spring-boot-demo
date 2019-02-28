@@ -2,7 +2,6 @@ package com.jin.learn.security;
 
 import com.jin.learn.dao.AccountMapper;
 import com.jin.learn.dao.AuthorityMapper;
-import com.jin.learn.dao.RoleMapper;
 import com.jin.learn.entity.Account;
 import com.jin.learn.entity.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
