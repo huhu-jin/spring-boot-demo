@@ -4,9 +4,13 @@
   <resultMap id="BaseResultMap" type="com.jin.learn.entity.Role">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="is_deleted" jdbcType="SMALLINT" property="isDeleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, role
+    id, role, role_name, create_time, modify_time, is_deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -19,8 +23,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jin.learn.entity.Role">
-    insert into role (id, role)
-    values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR})
+    insert into role (id, role, role_name, 
+      create_time, modify_time, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=SMALLINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jin.learn.entity.Role">
     insert into role
@@ -31,6 +39,18 @@
       <if test="role != null">
         role,
       </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -38,6 +58,18 @@
       </if>
       <if test="role != null">
         #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
@@ -47,12 +79,28 @@
       <if test="role != null">
         role = #{role,jdbcType=VARCHAR},
       </if>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=SMALLINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jin.learn.entity.Role">
     update role
-    set role = #{role,jdbcType=VARCHAR}
+    set role = #{role,jdbcType=VARCHAR},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=SMALLINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

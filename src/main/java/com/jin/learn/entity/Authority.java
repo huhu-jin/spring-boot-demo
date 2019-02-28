@@ -3,6 +3,7 @@ package com.jin.learn.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Authority implements Serializable, GrantedAuthority {
     private Long id;
@@ -14,6 +15,12 @@ public class Authority implements Serializable, GrantedAuthority {
     private String authority;
 
     private String authorityName;
+
+    private Date createTime;
+
+    private Date modifyTime;
+
+    private Boolean isDeleted;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +64,30 @@ public class Authority implements Serializable, GrantedAuthority {
         this.authorityName = authorityName == null ? null : authorityName.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -68,6 +99,9 @@ public class Authority implements Serializable, GrantedAuthority {
         sb.append(", pid=").append(pid);
         sb.append(", authority=").append(authority);
         sb.append(", authorityName=").append(authorityName);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", modifyTime=").append(modifyTime);
+        sb.append(", isDeleted=").append(isDeleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

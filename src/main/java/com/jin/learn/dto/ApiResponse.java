@@ -1,5 +1,8 @@
 package com.jin.learn.dto;
 
+import com.jin.learn.exception.ExceptionCode;
+import com.jin.learn.exception.SystemException;
+
 public class ApiResponse {
 
     private int                 code;
@@ -17,10 +20,17 @@ public class ApiResponse {
     }
 
 
+    public static ApiResponse OK() {
+        return new ApiResponse(10000, "success", "");
+    }
+
     public static ApiResponse OK(Object data) {
         return new ApiResponse(10000, "success", data);
     }
 
+     public static ApiResponse ERROR(ExceptionCode exceptionCode) {
+        return new ApiResponse(exceptionCode.getErrorCode(), exceptionCode.getErrorMsg(), "");
+    }
 
     /**
      * 设置相应数据

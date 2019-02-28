@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.DenyAll;
-import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("/demo")
@@ -28,9 +26,6 @@ public class DemoController {
     public String hello3() {
         return "world";
     }
-
-
-
 
     @GetMapping("/free")
     public String test() {
