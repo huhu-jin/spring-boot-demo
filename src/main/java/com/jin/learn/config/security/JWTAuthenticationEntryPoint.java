@@ -1,4 +1,4 @@
-package com.jin.learn.security;
+package com.jin.learn.config.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

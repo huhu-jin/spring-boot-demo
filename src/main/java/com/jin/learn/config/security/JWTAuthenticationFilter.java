@@ -1,4 +1,4 @@
-package com.jin.learn.security;
+package com.jin.learn.config.security;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jin.learn.dto.ApiResponse;

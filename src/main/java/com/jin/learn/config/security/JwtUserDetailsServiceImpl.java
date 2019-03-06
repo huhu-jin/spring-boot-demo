@@ -1,4 +1,4 @@
-package com.jin.learn.security;
+package com.jin.learn.config.security;
 
 import com.jin.learn.dao.AccountMapper;
 import com.jin.learn.dao.AuthorityMapper;

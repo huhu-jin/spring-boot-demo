@@ -1,10 +1,6 @@
-package com.jin.learn.security;
+package com.jin.learn.config.security;
 
-import com.jin.learn.security.JWTAuthenticationFilter;
-import com.jin.learn.security.JWTAuthenticationEntryPoint;
-import com.jin.learn.security.JwtUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
