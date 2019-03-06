@@ -16,12 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-
+// @ControllerAdvice注解内部使用@ExceptionHandler、@InitBinder、@ModelAttribute注解的方法应用到所有的 @RequestMapping注解的方法
 @ControllerAdvice
 @ResponseBody
 @Slf4j
 public class GlobalExceptionHandler {
 
+    //必填参数
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
     public ApiResponse requestParameterHandler(HttpServletRequest request,
                                            Exception exception) throws Exception {
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler {
         return error;
     }
 
+    //validation 参数
     @ExceptionHandler(value = {BindException.class, MethodArgumentNotValidException.class})
     public ApiResponse validationExceptionHandler(Exception exception) {
         BindingResult bindResult = null;

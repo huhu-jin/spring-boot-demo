@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+//用户类必须实现userDetail接口 返回权限
 public class Account implements UserDetails, Serializable {
 
     private List<Authority> authorities;

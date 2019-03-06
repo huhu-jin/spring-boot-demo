@@ -67,10 +67,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
                 return;
             }
+            // 让@PreAuthorize("hasAuthority('reborn')") 起作用
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             log.info("authorized user '{}', setting security context", username);
-            SecurityContextHolder.getContext().setAuthentication(authentication); //放入上下文环境
+            SecurityContextHolder.getContext().setAuthentication(authentication); // 放入上下文环境
             chain.doFilter(request, response);
         }
         // 验证失败
