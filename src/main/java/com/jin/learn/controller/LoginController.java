@@ -31,10 +31,7 @@ public class LoginController {
     @PostMapping("/login")
     public ApiResponse login(@RequestBody @Valid LoginRequest request){
         Account account = (Account)userDetailsService.loadUserByUsername(request.getUsername());
-        if (account == null) {
-            return new ApiResponse(1001, "用户名密码错误", "");
-        }
-        if (!bCryptPasswordEncoder.matches(request.getPassword(),account.getPassword())) {
+        if (account == null || !bCryptPasswordEncoder.matches(request.getPassword(),account.getPassword())) {
             return new ApiResponse(1001, "用户名密码错误", "");
         }
         String token =  JWTUtil.doGenerateToken(account);

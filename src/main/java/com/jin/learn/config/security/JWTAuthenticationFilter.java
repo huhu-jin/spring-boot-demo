@@ -35,22 +35,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    private static List<String> notFilterUrls = new LinkedList<>();
-
-    static {
-        notFilterUrls.add("/demo/free");
-        notFilterUrls.add("/demo/authorize/**");
-    }
-
     @Autowired
     private UserDetailsService userDetailsService;
 
     // 不需要验证的url
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request){
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        for (String urlPattern : notFilterUrls) {
-            if (antPathMatcher.match(requestURI, urlPattern)) return true;
+        for (String urlPattern : WebSecurityConfig.notFilterUrls) {
+            if (antPathMatcher.match(urlPattern, requestURI)) return true;
         }
         return false;
     }
@@ -73,15 +66,14 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             log.info("authorized user '{}', setting security context", username);
             SecurityContextHolder.getContext().setAuthentication(authentication); // 放入上下文环境
             chain.doFilter(request, response);
+        } else {
+            // 验证失败
+            ServletOutputStream out = response.getOutputStream();
+            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            String message = JSONObject.toJSONString(new ApiResponse(1001, "token无效", ""));
+            out.write(message.getBytes(Charset.defaultCharset()));
+            out.flush();
         }
-        // 验证失败
-        ServletOutputStream out = response.getOutputStream();
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        String message = JSONObject.toJSONString(new ApiResponse(1001, "token无效", ""));
-        out.write(message.getBytes(Charset.defaultCharset()));
-        out.flush();
-
-
     }
 
 }

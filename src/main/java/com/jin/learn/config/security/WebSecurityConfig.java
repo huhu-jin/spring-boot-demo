@@ -11,7 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * https://github.com/spring-projects/spring-security/tree/master/samples 官方例子
@@ -21,14 +25,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    public static List<String> notFilterUrls = new LinkedList<>();
+
+    static {
+        notFilterUrls.add("/demo/free");
+        notFilterUrls.add("/demo/authorize/**");
+    }
+
     // 报错信息
     @Autowired
     private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
+
     // 这个服务获取用户具体的权限粒度
     @Autowired
     private JwtUserDetailsServiceImpl jwtUserDetailsService;
-
 
     @Autowired
     private JWTAuthenticationFilter jwtAuthenticationFilter;
@@ -50,18 +63,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(getBCryptPasswordEncoder());
     }
 
-
-
     // 路由信息配置
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().
                 and().csrf().disable() // csrf　不需要
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and() //　错误信息处理
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler).and() // 错误信息处理403
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() // 不要产生session
                 .authorizeRequests()
                 //允许以下请求
-                .antMatchers("/demo/free","/demo/authorize/**").permitAll()
+                .antMatchers(notFilterUrls.toArray(new String[0])).permitAll()
                 // 所有请求需要身份认证
                 .anyRequest().authenticated();
 
