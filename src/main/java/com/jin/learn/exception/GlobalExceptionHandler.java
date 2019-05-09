@@ -3,7 +3,6 @@ package com.jin.learn.exception;
 import com.jin.learn.dto.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -52,10 +51,13 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
-    @ExceptionHandler(value = AccessDeniedException.class)
-    public ApiResponse accessDeniedExceptionHandler(HttpServletRequest request, Exception exception){
-        return ApiResponse.ERROR(ExceptionCode.NO_PERMISSION);
+    // 系统已知异常
+    @ExceptionHandler(value = {SystemException.class})
+    public ApiResponse systemExceptionHandler(Exception exception) {
+        return ApiResponse.ERROR((SystemException)exception);
     }
+
+
 
     @ExceptionHandler(value = Exception.class)
     public ApiResponse allExceptionHandler(HttpServletRequest request, Exception exception){

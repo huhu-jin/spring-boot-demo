@@ -1,21 +1,24 @@
 package com.jin.learn.until;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.jin.learn.entity.Role;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class CacheUtil {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
 
     /**
@@ -58,6 +61,10 @@ public class CacheUtil {
      */
     public <T> T get(final String key, Class<T> clazz) {
          return JSON.parseObject((String) redisTemplate.opsForValue().get(key), clazz);
+    }
+
+    public Set<String> getSet(final String key) {
+        return (Set<String>)redisTemplate.opsForValue().get(key);
     }
 
     /**

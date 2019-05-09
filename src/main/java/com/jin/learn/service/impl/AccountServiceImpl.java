@@ -23,5 +23,10 @@ public class AccountServiceImpl implements AccountService {
         accountMapper.insert(account);
     }
 
+    @Override
+    public Account findByUsername(String username) {
+        return accountMapper.selectByUsername(username);
+    }
+
 
 }

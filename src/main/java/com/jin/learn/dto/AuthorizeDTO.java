@@ -2,9 +2,8 @@ package com.jin.learn.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Data
 @Builder
@@ -12,5 +11,5 @@ public class AuthorizeDTO {
 
     private String token;
 
-    private Collection<? extends GrantedAuthority> authorizes;
+    private Set<String> authorizes;
 }

@@ -1,7 +1,7 @@
 package com.jin.learn.controller;
 
+import com.jin.learn.config.security.Authorize;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +19,13 @@ public class DemoController {
     }
 
     @GetMapping("/login2")
-    @PreAuthorize("hasAuthority('reborn')")
+    @Authorize(value="reborn")
     public String hello1() {
         return "world";
     }
 
     @GetMapping("/login3")
-    @PreAuthorize("hasAuthority('rebornreborn')")
+    @Authorize("rebornreborn")
     public String hello3() {
         return "world";
     }

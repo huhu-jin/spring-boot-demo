@@ -126,9 +126,9 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="selectByAccountId" resultType="com.jin.learn.entity.Authority">
+    <select id="findByAccountId" resultType="java.lang.String">
         select
-        <include refid="Base_Column_List"/>
+          authority
         from authority
         where id in
         (select authority_id from role_authority where role_id in (select role_id from account_role where account_id =

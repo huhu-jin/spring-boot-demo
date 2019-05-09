@@ -2,7 +2,9 @@ package com.jin.learn.dto;
 
 import com.jin.learn.exception.ExceptionCode;
 import com.jin.learn.exception.SystemException;
+import lombok.Data;
 
+@Data
 public class ApiResponse {
 
     private int                 code;
@@ -28,15 +30,14 @@ public class ApiResponse {
         return new ApiResponse(10000, "success", data);
     }
 
-     public static ApiResponse ERROR(ExceptionCode exceptionCode) {
+    public static ApiResponse ERROR(ExceptionCode exceptionCode) {
         return new ApiResponse(exceptionCode.getErrorCode(), exceptionCode.getErrorMsg(), "");
     }
 
-    /**
-     * 设置相应数据
-     *
-     * @param data
-     */
+    public static ApiResponse ERROR(SystemException exception) {
+        return ERROR(exception.getExceptionCode());
+    }
+
     public void setResponseData(Object data) {
         if (data != null) {
             this.setData(data);
@@ -46,26 +47,5 @@ public class ApiResponse {
         }
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-    public void setData(Object data) {
-        this.data = data;
-    }
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
 }

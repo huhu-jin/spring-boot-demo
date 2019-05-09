@@ -1,7 +1,7 @@
 package com.jin.learn.until;
 
+import com.jin.learn.until.bcrypt.BCryptPasswordEncoder;
 import org.junit.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class BCryptPasswordEncoderTest {
 
