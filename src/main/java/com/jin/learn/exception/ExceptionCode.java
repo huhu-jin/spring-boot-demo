@@ -11,6 +11,8 @@ public enum ExceptionCode {
 	SYSTEM_ERROR("SYSTEM_ERROR", 1003, "system error", "系统异常"),
 	NETWORK_ERROR_404("NETWORK_ERROR",1004,"network not found","网络异常 404"),
 	PARAM_ERROR("PARAM_ERROR",1005,"param error","传入参数异常"),
+	METHOD_ERROR("METHOD_ERROR",1006,"method error","请求方法不支持"),
+
 
 	TOKEN_FAILURE("TOKEN_FAILURE",240003,"token failure","token失效"),
 	NO_PERMISSION("NO_PERMISSION",240004,"no permission","无操作权限"),

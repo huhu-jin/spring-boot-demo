@@ -39,7 +39,7 @@ public class AuthorizationAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         // 查询用户拥有权限
         Long accountId = JWTUtil.getUserIdFromRequest(request);
-        Set<String> authorization = cacheUtil.getSet(PRE + accountId);
+        Set<String> authorization = cacheUtil.getAllSet(PRE + accountId);
         if(authorization==null){
             authorization = authorizationService.findByAccountId(accountId);
             cacheUtil.save(PRE + accountId, authorization);

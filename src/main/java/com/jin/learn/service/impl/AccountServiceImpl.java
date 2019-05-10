@@ -3,17 +3,16 @@ package com.jin.learn.service.impl;
 import com.jin.learn.dao.AccountMapper;
 import com.jin.learn.entity.Account;
 import com.jin.learn.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AccountMapper accountMapper;
-
+    private final AccountMapper accountMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)

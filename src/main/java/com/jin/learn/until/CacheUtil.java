@@ -1,18 +1,17 @@
 package com.jin.learn.until;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.jin.learn.entity.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * 常见的redis操作封装
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -21,72 +20,68 @@ public class CacheUtil {
     private final RedisTemplate<String, Object> redisTemplate;
 
 
-    /**
-     * 保存到缓存，过期时间为默认过期时间
-     *
-     * @param key     缓存key
-     * @param seriObj 缓存数据
-     */
     public void save(final String key, final Object object) {
         this.save(key, object, 604800L);
     }
 
-    /**
-     * 保存到缓存，并设定过期时间
-     *
-     * @param key    缓存key
-     * @param obj    缓存数据
-     * @param expire 过期时间
-     */
     public void save(final String key, final Object obj, final long expire) {
         redisTemplate.opsForValue().set(key, obj, expire, TimeUnit.MILLISECONDS);
     }
 
-
-    /**
-     * 获取缓存对象的字符串值
-     *
-     * @param key 缓存key
-     * @return
-     */
-    public String get(final String key) {
-        return (String) redisTemplate.opsForValue().get(key);
+    public <T> T get(final String key,Class<T> val) {
+        return (T) redisTemplate.opsForValue().get(key);
+    }
+    /*############list相关操作###########*/
+    public Long listLeftPush(final String key, final Object val) {
+        return redisTemplate.opsForList().leftPush(key, val);
     }
 
-    /**
-     * 获取缓存对象
-     *
-     * @param key 缓存key
-     * @return
-     */
-    public <T> T get(final String key, Class<T> clazz) {
-         return JSON.parseObject((String) redisTemplate.opsForValue().get(key), clazz);
+    public Long listRightPush(final String key, final Object val) {
+        return redisTemplate.opsForList().rightPush(key, val);
     }
 
-    public Set<String> getSet(final String key) {
-        return (Set<String>)redisTemplate.opsForValue().get(key);
+    public <T> T listRightPop(final String key, Class<T> clazz) {
+        return (T) redisTemplate.opsForList().rightPop(key);
     }
 
-    /**
-     * 锁住某个key值，需要解锁时删除即可
-     *
-     * @param key
-     * @param value
-     * @return
-     */
-    public boolean lock(final String key, final String value) {
-        return false;
+    public <T> T listLeftPop(final String key, Class<T> clazz) {
+        return (T) redisTemplate.opsForList().leftPop(key);
+    }
+
+    /*############map相关操作###########*/
+    public void dictKeyAdd(final String key, final String hashKey, final Object value) {
+        redisTemplate.opsForHash().put(key, hashKey, value);
+    }
+
+    public Long dictKeyRemove(final String key, final Object... hashKey) {
+        return redisTemplate.opsForHash().delete(key, hashKey);
+    }
+
+    public Map getEntireDict(final String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    /*############set相关操作###########*/
+    public Set getAllSet(final String key) {
+        return redisTemplate.opsForSet().members(key);
     }
 
 
-    /**
-     * 删除缓存
-     *
-     * @param key 需要删除缓存的id
-     */
+    public Boolean exprire(final String key,long time) {
+        return redisTemplate.expire(key, time, TimeUnit.MILLISECONDS);
+    }
+
+
     public Boolean delete(final String key) {
         return redisTemplate.delete(key);
     }
 
+    public Boolean lock(final String key, final String value) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, 30, TimeUnit.SECONDS);
+    }
+
+    public Boolean release(final String key) {
+        return delete(key);
+    }
 
 }

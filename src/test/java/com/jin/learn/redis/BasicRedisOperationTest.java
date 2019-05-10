@@ -66,7 +66,6 @@ public class BasicRedisOperationTest {
     @Test
     public void testCacheUtil() {
         Role obj = cacheUtil.get("obj12", Role.class);
-        System.out.println(obj.getCreateTime());
     }
 
 

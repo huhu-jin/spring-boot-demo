@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -57,6 +58,13 @@ public class GlobalExceptionHandler {
     public ApiResponse netWork404Handler(Exception exception) {
         return ApiResponse.ERROR(ExceptionCode.NETWORK_ERROR_404);
     }
+
+    // 方法错误
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    public ApiResponse httpRequestMethodNotSupportHandler(Exception exception) {
+        return ApiResponse.ERROR(ExceptionCode.NETWORK_ERROR_404);
+    }
+
 
     // 系统已知异常
     @ExceptionHandler(value = {SystemException.class})
