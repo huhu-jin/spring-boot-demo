@@ -8,7 +8,6 @@ import com.jin.learn.service.AccountService;
 import com.jin.learn.service.AuthorizationService;
 import com.jin.learn.until.JWTUtil;
 import com.jin.learn.until.bcrypt.BCryptPasswordEncoder;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +26,7 @@ public class LoginController {
 
     private final AccountService accountService;
 
-    @NonNull
-    private AuthorizationService authorizationService;
+    private final AuthorizationService authorizationService;
 
 
     private static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();

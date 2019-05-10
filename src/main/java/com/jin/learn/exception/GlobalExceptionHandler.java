@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -49,6 +50,12 @@ public class GlobalExceptionHandler {
             apiResponse.setData(errorField);
         }
         return apiResponse;
+    }
+
+    // 404
+    @ExceptionHandler(value = {NoHandlerFoundException.class})
+    public ApiResponse netWork404Handler(Exception exception) {
+        return ApiResponse.ERROR(ExceptionCode.NETWORK_ERROR_404);
     }
 
     // 系统已知异常

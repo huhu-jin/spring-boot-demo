@@ -2,7 +2,11 @@ server:
   port: 8081
 
 spring:
-# mysql配置
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  # mysql配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/demo?noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&connectTimeout=10000&socketTimeout=60000&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=TRUE&useSSL=false
     username: root

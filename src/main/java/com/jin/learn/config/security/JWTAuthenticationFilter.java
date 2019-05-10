@@ -2,6 +2,7 @@ package com.jin.learn.config.security;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jin.learn.dto.ApiResponse;
+import com.jin.learn.exception.ExceptionCode;
 import com.jin.learn.until.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -33,7 +34,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     static {
         notFilterUrls.add("/demo/free");
-        notFilterUrls.add("/demo/authorize/**");
+        notFilterUrls.add("/demo/authorize/login"); //可使用通配符 /demo/authorize/**
     }
 
     // 不需要验证的url
@@ -57,7 +58,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             // 验证失败
             ServletOutputStream out = response.getOutputStream();
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            String message = JSONObject.toJSONString(new ApiResponse(1001, "token无效", ""));
+
+            String message = JSONObject.toJSONString(ApiResponse.ERROR(ExceptionCode.TOKEN_FAILURE));
             out.write(message.getBytes(Charset.defaultCharset()));
             out.flush();
         }
