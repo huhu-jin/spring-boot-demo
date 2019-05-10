@@ -3,6 +3,7 @@ package com.jin.learn.controller;
 import com.jin.learn.dto.ApiResponse;
 import com.jin.learn.dto.AuthorizeDTO;
 import com.jin.learn.entity.Account;
+import com.jin.learn.exception.ExceptionCode;
 import com.jin.learn.request.authorize.LoginRequest;
 import com.jin.learn.service.AccountService;
 import com.jin.learn.service.AuthorizationService;
@@ -19,15 +20,13 @@ import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
-@Slf4j
 @RequestMapping("/demo/authorize")
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Slf4j
 public class LoginController {
 
     private final AccountService accountService;
 
     private final AuthorizationService authorizationService;
-
 
     private static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -35,7 +34,7 @@ public class LoginController {
     public ApiResponse login(@RequestBody @Valid LoginRequest request){
         Account account = accountService.findByUsername(request.getUsername());
         if (account == null || !bCryptPasswordEncoder.matches(request.getPassword(),account.getPassword())) {
-            return new ApiResponse(1001, "用户名密码错误", "");
+            return ApiResponse.ERROR(ExceptionCode.LOGIN_ERROR);
         }
         String token =  JWTUtil.doGenerateToken(account);
         Set<String> authorization = authorizationService.findByAccountId(account.getId());
