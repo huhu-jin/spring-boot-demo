@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +25,6 @@ import java.util.Map;
 @ResponseBody
 @Slf4j
 public class GlobalExceptionHandler {
-
-    //必填参数
-    @ExceptionHandler(value = {MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
-    public ApiResponse requestParameterHandler(HttpServletRequest request,
-                                           Exception exception) throws Exception {
-        ApiResponse error = ApiResponse.ERROR(ExceptionCode.PARAM_ERROR);
-        error.setData(exception.getMessage());
-        return error;
-    }
 
     //validation 参数
     @ExceptionHandler(value = {BindException.class, MethodArgumentNotValidException.class})
@@ -53,25 +46,10 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
-    // 404
-    @ExceptionHandler(value = {NoHandlerFoundException.class})
-    public ApiResponse netWork404Handler(Exception exception) {
-        return ApiResponse.ERROR(ExceptionCode.NETWORK_ERROR_404);
-    }
-
-    // 方法错误
-    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    @ExceptionHandler(value = {ServletException.class})
     public ApiResponse httpRequestMethodNotSupportHandler(Exception exception) {
-        return ApiResponse.ERROR(ExceptionCode.NETWORK_ERROR_404);
+        return new ApiResponse(ExceptionCode.FAILED.getErrorCode(), exception.getMessage(), "");
     }
-
-
-    // 系统已知异常
-    @ExceptionHandler(value = {SystemException.class})
-    public ApiResponse systemExceptionHandler(Exception exception) {
-        return ApiResponse.ERROR((SystemException)exception);
-    }
-
 
 
     @ExceptionHandler(value = Exception.class)

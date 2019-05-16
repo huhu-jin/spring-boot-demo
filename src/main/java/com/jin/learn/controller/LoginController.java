@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/demo/authorize")
+@RequestMapping("/demo")
 @RequiredArgsConstructor @Slf4j
 public class LoginController {
 

@@ -33,8 +33,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     public static List<String> notFilterUrls = new LinkedList<>();
 
     static {
-        notFilterUrls.add("/demo/free");
-        notFilterUrls.add("/demo/authorize/login"); //可使用通配符 /demo/authorize/**
+        notFilterUrls.add("/demo/login");
+        notFilterUrls.add("/demo/free/**");
     }
 
     // 不需要验证的url
