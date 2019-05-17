@@ -1,5 +1,6 @@
 package com.jin.learn.controller;
 
+import com.jin.learn.Application;
 import com.jin.learn.dto.ApiResponse;
 import com.jin.learn.dto.AuthorizeDTO;
 import com.jin.learn.entity.Account;
@@ -11,6 +12,7 @@ import com.jin.learn.until.JWTUtil;
 import com.jin.learn.until.bcrypt.BCryptPasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ import java.util.Set;
 @RequestMapping("/demo")
 @RequiredArgsConstructor @Slf4j
 public class LoginController {
+
+    private final ApplicationContext applicationContext;
 
     private final AccountService accountService;
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class DemoController {
 
-    @GetMapping(name="asdf",value = {"/login","asdf","aasdf","asdf/sdf/**"})
+    @GetMapping(name="asdf",value = {"asdf","aasdf","asdf/sdf/**"})
     public String hello() {
         return "world";
     }
