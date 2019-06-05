@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+jasypt:
+  encryptor:
+    password: abc
+
 spring:
   mvc:
     throw-exception-if-no-handler-found: true
@@ -9,8 +13,8 @@ spring:
   # mysql配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/demo?noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&connectTimeout=10000&socketTimeout=60000&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=TRUE&useSSL=false
-    username: root
-    password: root
+    username: ENC(sQVyWjOwOZuEpJG4nzloZg==)
+    password: ENC(sQVyWjOwOZuEpJG4nzloZg==)
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
