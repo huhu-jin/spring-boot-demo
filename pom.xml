@@ -97,6 +97,13 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
+        <!-- 内存缓存 -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
         <!--#################消息中间件##################################################-->
         <!--https://github.com/maihaoche/rocketmq-spring-boot-starter-->
         <dependency>

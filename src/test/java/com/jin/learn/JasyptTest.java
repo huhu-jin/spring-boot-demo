@@ -27,7 +27,7 @@ public class JasyptTest {
         BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
         //加密所需的salt(盐)
         textEncryptor.setPassword(salt);
-        String decrypt = textEncryptor.decrypt("3jJZBwN5gTnOcN7KwRxTwQ==");
+        String decrypt = textEncryptor.decrypt("sQVyWjOwOZuEpJG4nzloZg==");
         System.out.println(decrypt);
 
     }

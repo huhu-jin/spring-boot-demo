@@ -1,7 +1,6 @@
 package com.jin.learn.config.security;
 
 
-import com.alibaba.fastjson.TypeReference;
 import com.jin.learn.exception.ExceptionCode;
 import com.jin.learn.exception.SystemException;
 import com.jin.learn.service.AuthorizationService;
