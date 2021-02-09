@@ -33,7 +33,7 @@ public class DemoController {
     @GetMapping("/free")
     public String test(@RequestParam String st) {
         log.error("ssss{}{}",123,2222);
-        return "world";
+        return "world"+st;
 
     }
 
