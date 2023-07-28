@@ -44,13 +44,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(value = Exception.class)
-    public ApiResponse allExceptionHandler(Exception exception){
-        if (exception instanceof SystemException) {
-            return ApiResponse.ERROR(((SystemException) exception).getExceptionCode());
-        }
-        log.error("异常提示----------------------", exception);
-        return ApiResponse.ERROR(ExceptionCode.FAILED);
-    }
+
 
 }

@@ -37,6 +37,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         notFilterUrls.add("/demo/login"); //可使用通配符 /demo/authorize/**
         notFilterUrls.add("/demo/captcha");
         notFilterUrls.add("/token/**");
+        notFilterUrls.add("/account/**");
+        notFilterUrls.add("/business/**");
+        notFilterUrls.add("/order/**");
+        notFilterUrls.add("/storage/**");
     }
 
     // 不需要验证的url

@@ -26,6 +26,10 @@ public class ApiResponse {
         return new ApiResponse(10000, "success", "");
     }
 
+    public static ApiResponse NOT_FOUND() {
+        return new ApiResponse(10404, "not found", "");
+    }
+
     public static ApiResponse OK(Object data) {
         return new ApiResponse(10000, "success", data);
     }

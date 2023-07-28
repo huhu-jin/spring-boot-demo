@@ -4,6 +4,7 @@ import com.jin.learn.dao.AuthorityMapper;
 import com.jin.learn.service.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 

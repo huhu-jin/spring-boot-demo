@@ -2,37 +2,37 @@ package com.jin.learn.entity;
 
 import java.io.Serializable;
 
-public class RoleAuthority implements Serializable {
-    private Long id;
+public class AccountTbl implements Serializable {
+    private Integer id;
 
-    private Long roleId;
+    private String userId;
 
-    private Long authorityId;
+    private Integer money;
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
-    public Long getAuthorityId() {
-        return authorityId;
+    public Integer getMoney() {
+        return money;
     }
 
-    public void setAuthorityId(Long authorityId) {
-        this.authorityId = authorityId;
+    public void setMoney(Integer money) {
+        this.money = money;
     }
 
     @Override
@@ -42,8 +42,8 @@ public class RoleAuthority implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", roleId=").append(roleId);
-        sb.append(", authorityId=").append(authorityId);
+        sb.append(", userId=").append(userId);
+        sb.append(", money=").append(money);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
